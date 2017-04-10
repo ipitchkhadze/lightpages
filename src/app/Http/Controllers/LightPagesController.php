@@ -24,11 +24,9 @@ class LightPagesController extends BaseController {
         return Datatables::of($pages)
                         ->addColumn('action', function ($page) {
                             $btns = '';
-//                                if (Auth::user()->can('print'))
-                            $btns .= '<a class="btn btn-default" href="' . route('pages.show', ['page' => $page->slug]) . '"><i class="fa fa-eye"></i></a>';
+                            $btns .= '<a class="btn btn-default" href="' . route('page', ['page' => $page->slug]) . '"><i class="fa fa-eye"></i></a>';
                             $btns .= '<a class="btn btn-primary" href="' . route('pages.edit', ['page' => $page->slug]) . '"><i class="fa fa-edit"></i></a>';
-                            $btns .= '<a class="btn btn-danger" href="' . route('pages.destroy', ['page' => $page->slug]) . '"><i class="fa fa-trash"></i></a>';
-//                                if (Auth::user()->can('refound') && $now->diffInMinutes($created, false) > 30)
+                            $btns .= '<a class="btn btn-danger destroy" href="' . route('pages.destroy', ['page' => $page->slug]) . '" data-method="delete" ><i class="fa fa-trash"></i></a>';
                             return $btns;
                         })
                         ->editColumn('created_at', function ($payment) {
@@ -64,7 +62,7 @@ class LightPagesController extends BaseController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($slug) {
         //
     }
 
@@ -86,8 +84,10 @@ class LightPagesController extends BaseController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-        //
+    public function update(Request $request, $slug) {
+        $page = P::findBySlug($slug);
+        $page->fill($request->all())->save();
+        return redirect()->route('pages.index');
     }
 
     /**
@@ -96,8 +96,13 @@ class LightPagesController extends BaseController {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        //
+    public function destroy($slug) {
+        $page     = P::findBySlug($slug);
+        $page->delete();
+        $responce = [
+            'status' => 'success'
+        ];
+        return json_encode($responce);
     }
 
 }

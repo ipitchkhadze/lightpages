@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class LightPagesServiceProvider extends ServiceProvider {
 
-   
     /**
      * Bootstrap the application services.
      *
@@ -30,6 +29,12 @@ class LightPagesServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__ . '/resources/assets' => public_path('vendor/lightpages'),
                 ], 'public');
+        //Console
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \Ipitchkhadze\LightPages\App\Console\MakeLightPagesCommand::class,
+            ]);
+        }
     }
 
     /**

@@ -8,7 +8,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Редактировать страницу {{ $page->name }}</h3>
         </div>
-        {!! Form::model($page,['route'=>['pages.update',$page->slug],'class'=>'form-horizontal']) !!}
+        {!! Form::model($page,['route'=>['pages.update',$page->slug],'method' => 'patch','class'=>'form-horizontal']) !!}
         <div class="box-body">
             @include('lightpages::forms.page_form',['submitText'=>'Обновить'])
         </div>
