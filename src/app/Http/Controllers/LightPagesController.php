@@ -5,8 +5,8 @@ namespace Ipitchkhadze\LightPages\App\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
-use Ipitchkhadze\LightPages\App\Models\Page;
-use Datatables ;
+use Ipitchkhadze\LightPages\App\Models\Page as P;
+use Datatables;
 
 class LightPagesController extends BaseController {
 
@@ -19,36 +19,18 @@ class LightPagesController extends BaseController {
         return view('lightpages::index');
     }
 
-    public function getData() {
-        $pages = Pages::all()->get();
-                
+    public function data() {
+        $pages = P::all();
         return Datatables::of($pages)
-//                        ->addColumn('pbtn', function ($payment) {
-//
-//                            if ($payment->status == 8) {
-//                                $pls         = json_decode($payment->placement);
-//                                $placenments = '';
-//                                if (is_array($pls)) {
-//                                    foreach ($pls as $placement) {
-//                                        if (isset($placement->event_name)) {
-//                                            $placenments .= 'ряд - ' . $placement->row . ', место - ' . $placement->place . ' <br>';
-//                                        }
-//                                    }
-//                                }
-//
-//                                $created = new Carbon($payment->date);
-//                                $now     = Carbon::now();
-//
-//                                $btns = '';
+                        ->addColumn('action', function ($page) {
+                            $btns = '';
 //                                if (Auth::user()->can('print'))
-//                                    $btns .= '<button class="btn btn-default pay-btn" sb_order="' . $payment->sb_order . '">Печать билетов</button>';
+                            $btns .= '<a class="btn btn-default" href="' . route('pages.show', ['page' => $page->slug]) . '"><i class="fa fa-eye"></i></a>';
+                            $btns .= '<a class="btn btn-primary" href="' . route('pages.edit', ['page' => $page->slug]) . '"><i class="fa fa-edit"></i></a>';
+                            $btns .= '<a class="btn btn-danger" href="' . route('pages.destroy', ['page' => $page->slug]) . '"><i class="fa fa-trash"></i></a>';
 //                                if (Auth::user()->can('refound') && $now->diffInMinutes($created, false) > 30)
-//                                    $btns .= '<button class="btn btn-warning ref-btn" event_name="' . $payment->event_name . '" event_date="' . Carbon::parse($payment->date)->format('d.m.Y в H:i') . '" event_places="' . $placenments . '" event_price="' . $payment->price . '" sb_order="' . $payment->sb_order . '">Возврат билетов</button>';
-//
-//                                return $btns;
-//                            }
-//                            return;
-//                        }, false)
+                            return $btns;
+                        })
                         ->editColumn('created_at', function ($payment) {
                             return $payment->created_at->format('d.m.Y H:i:s');
                         })
@@ -71,7 +53,7 @@ class LightPagesController extends BaseController {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $page = new Page($request->all());
+        $page = new P($request->all());
         $page->save();
         return redirect()->route('pages.index');
     }
@@ -93,7 +75,7 @@ class LightPagesController extends BaseController {
      * @return \Illuminate\Http\Response
      */
     public function edit($slug) {
-        $data['page'] = Page::findBySlugOrFail($slug);
+        $data['page'] = P::findBySlugOrFail($slug);
         return view('lightpages::edit', $data);
     }
 

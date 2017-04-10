@@ -50,7 +50,7 @@ class LightPagesServiceProvider extends ServiceProvider {
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Form', \Collective\Html\FormFacade::class);
         $loader->alias('Html', \Collective\Html\HtmlFacade::class);
-        $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables);
+        $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables::class);
     }
 
 }

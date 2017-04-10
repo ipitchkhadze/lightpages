@@ -1,6 +1,11 @@
 @extends('lightpages::layout.layout')
 
 
+@section('styles')
+<link href="/vendor/lightpages/js/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="/vendor/lightpages/js/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+@stop
+
 @section('content')
 <div class="col-md-12">
     <div class="box">
@@ -9,31 +14,25 @@
         </div>
         <div class="box-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered" id="payments-table">
+                <table class="table table-striped table-bordered" id="pages-table">
                     <thead>
                         <tr>
-                            <th>Basis_id</th>
-                            <th>E-mail</th>
+                            <th>id</th>
                             <th>Наименование</th>
-                            <th>Статус</th>
-                            <th>Места</th>
-                            <th>Цена</th>
+                            <th>Title</th>
+                            <th>URL</th>
                             <th>Дата</th>
-                            <th>Дата Мероприятия</th>
-                            <th>Печать</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Basis_id</th>
-                            <th>E-mail</th>
+                            <th>id</th>
                             <th>Наименование</th>
-                            <th>Статус</th>
-                            <th>Места</th>
-                            <th>Цена</th>
+                            <th>Title</th>
+                            <th>URL</th>
                             <th>Дата</th>
-                            <th>Дата Мероприятия</th>
-                            <th class="non_searchable" >Печать</th>
+                            <th></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -44,13 +43,13 @@
 @stop
 
 @section('scripts')
-<script type="text/javascript" src="/vendors/lightpages/js/plugins/dataTables.min.js"></script>
-
+<script type="text/javascript" src="/vendor/lightpages/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/vendor/lightpages/js/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 <script>
 
     $(document).ready(function () {
 
-        var table = $('#payments-table').DataTable({
+        var table = $('#pages-table').DataTable({
             processing: true,
             serverSide: true,
             pageLength: 25,
@@ -73,19 +72,16 @@
             ],
             ajax: '{!! route('pages.data') !!}',
             columns: [
-                {data: 'basis_order', name: 'basis_order'},
-                {data: 'email', name: 'email'},
-                {data: 'event_name', name: 'event_name', className: 'event_name'},
-                {data: 'description', name: 'description', orderable: false},
-                {data: 'placement', name: 'placement', searchable: false, orderable: false, className: 'event_places'},
-                {data: 'price', name: 'price', searchable: false, className: 'event_price'},
-                {data: 'created_at', name: 'payments.created_at'},
-                {data: 'date', name: 'date', searchable: false, className: 'event_date'},
-                {data: 'pbtn', name: 'pbtn', searchable: false, orderable: false}
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'title', name: 'title', className: 'title'},
+                {data: 'slug', name: 'slug'},
+                {data: 'created_at', name: 'pages.created_at'},
+                {data: 'action', name: 'action',searchable: false, orderable: false},
             ],
-            
+
             "order": [
-                [6, "desc"]
+                [4, "desc"]
             ],
             "language": {
                 "processing": "Подождите...",

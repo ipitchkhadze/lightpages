@@ -30,6 +30,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        @yield('styles')
     </head>
     <!--
     BODY TAG OPTIONS:
@@ -97,7 +98,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="/vendor/lightpages/js/bootstrap.min.js"></script>
         <!-- AdminLTE App -->
         <script src="/vendor/lightpages/js/app.min.js"></script>
-
+        @yield('scripts')
         <!-- Optionally, you can add Slimscroll and FastClick plugins.
              Both of these plugins are recommended to enhance the
              user experience. Slimscroll is required when using the
