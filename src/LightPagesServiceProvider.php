@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 class LightPagesServiceProvider extends ServiceProvider {
 
+   
     /**
      * Bootstrap the application services.
      *
@@ -37,7 +38,19 @@ class LightPagesServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register() {
-        
+        /*
+         * Register the service provider for the dependency.
+         */
+        $this->app->register(\Cviebrock\EloquentSluggable\ServiceProvider::class);
+        $this->app->register(\Collective\Html\HtmlServiceProvider::class);
+        $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
+        /*
+         * Create aliases for the dependency.
+         */
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Form', \Collective\Html\FormFacade::class);
+        $loader->alias('Html', \Collective\Html\HtmlFacade::class);
+        $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables);
     }
 
 }
