@@ -1,0 +1,16 @@
+{
+    "name": "ipitchkhadze/light-pages",
+    "description": "Pages crud package",
+    "authors": [
+        {
+            "name": "Mikhail Pichkhadze",
+            "email": "ipitchkhadze@gmail.com"
+        }
+    ],
+    "require": {},
+    
+    "psr-4": {
+        "App\\": "app/",
+        "Kremlinpalace\\LightPages\\": "packages/kremlinpalace/lightpages/src/"
+    }
+}
