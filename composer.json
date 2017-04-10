@@ -7,7 +7,7 @@
             "email": "ipitchkhadze@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "dist",
     "require": {
         "laravelcollective/html": "^5.3.0"
     }
