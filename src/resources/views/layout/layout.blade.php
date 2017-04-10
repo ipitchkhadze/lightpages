@@ -223,7 +223,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </nav>
             </header>
             <!-- Left side column. contains the logo and sidebar -->
-             @include('inc.sidebar')
+             @include('layout.inc.sidebar')
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
