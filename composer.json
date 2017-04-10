@@ -1,16 +1,14 @@
 {
-    "name": "ipitchkhadze/light-pages",
-    "description": "Pages crud package",
+    "name": "ipitchkhadze/lightpages",
+    "description": "Page admin crud generator",
     "authors": [
         {
             "name": "Mikhail Pichkhadze",
             "email": "ipitchkhadze@gmail.com"
         }
     ],
-    "require": {},
-    
-    "psr-4": {
-        "App\\": "app/",
-        "Kremlinpalace\\LightPages\\": "packages/kremlinpalace/lightpages/src/"
+    "minimum-stability": "dev",
+    "require": {
+        "laravelcollective/html": "^5.3.0"
     }
 }
