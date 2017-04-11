@@ -17,6 +17,11 @@ Then, update `config/app.php` by adding an entry for the service provider.
     Ipitchkhadze\LightPages\LightPagesServiceProvider::class,
 ];
 ```
+Then, make migration of lightpages table.
+
+```shell
+php artisan migrate
+```
 Then, generate needed files for Lightpages.
 
 ```shell
