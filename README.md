@@ -6,7 +6,7 @@ Page crud admin generator
 First, you'll need to install the package via Composer:
 
 ```shell
-$ composer require ipitchkhadze/lightpages v1.0.2.x-dev
+$ composer require ipitchkhadze/lightpages v2.0.0.x-dev
 ```
 
 Then, update `config/app.php` by adding an entry for the service provider.
