@@ -35,6 +35,8 @@ class LightPagesServiceProvider extends ServiceProvider {
                 \Ipitchkhadze\LightPages\App\Console\MakeLightPagesCommand::class,
             ]);
         }
+        //Translations
+         $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'lightpages');
     }
 
     /**

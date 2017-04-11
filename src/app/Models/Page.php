@@ -5,17 +5,17 @@ namespace Ipitchkhadze\LightPages\App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Ipitchkhadze\LightPages\App\Models\Lang;
 
 class Page extends Model {
 
     use Sluggable;
     use SluggableScopeHelpers;
 
-    protected $table       = 'pages';
-    protected $primaryKey  = 'id';
-    public $timestamps     = true;
-    protected $fillable    = ['name', 'title', 'slug', 'content', 'extras'];
-    protected $fakeColumns = ['extras'];
+    protected $table      = 'pages';
+    protected $primaryKey = 'id';
+    public $timestamps    = true;
+    protected $fillable   = ['name', 'page_id', 'lang_id', 'title', 'slug', 'content', 'state'];
 
     public function sluggable() {
         return [
@@ -25,19 +25,8 @@ class Page extends Model {
         ];
     }
 
-    public function getPageLink() {
-        return url($this->slug);
-    }
-
-    public function getOpenButton() {
-        return '<a class="btn btn-default btn-xs" href="' . $this->getPageLink() . '" target="_blank"><i class="fa fa-eye"></i> Open</a>';
-    }
-
-    public function getSlugOrTitleAttribute() {
-        if ($this->slug != '') {
-            return $this->slug;
-        }
-        return $this->title;
+    public function lang() {
+        return $this->belongsTo('\Ipitchkhadze\LightPages\App\Models\Lang', 'lang_id', 'id');
     }
 
 }

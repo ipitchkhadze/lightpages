@@ -14,4 +14,7 @@
 Route::group(['prefix' => 'admin', 'middleware' => 'web'], function() {
     Route::get('/pages/data', ['as' => 'pages.data', 'uses' => 'Ipitchkhadze\LightPages\App\Http\Controllers\LightPagesController@data']);
     Route::resource('/pages', 'Ipitchkhadze\LightPages\App\Http\Controllers\LightPagesController');
+
+    Route::get('/lang/data', ['as' => 'lang.data', 'uses' => 'Ipitchkhadze\LightPages\App\Http\Controllers\LangController@data']);
+    Route::resource('/lang', 'Ipitchkhadze\LightPages\App\Http\Controllers\LangController');
 });

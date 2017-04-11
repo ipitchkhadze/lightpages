@@ -11,7 +11,8 @@
         </div>
         <ul class="sidebar-menu">
             <li class="header">Menu</li>
-            <li class="active"><a href="{{route('pages.index')}}"><i class="fa fa-file-text-o"></i> <span>Pages</span></a></li>     
+            <li class="active"><a href="{{route('pages.index')}}"><i class="fa fa-file-text-o"></i> <span>{{ trans('lightpages::lightpages.menu_link_pages') }}</span></a></li>     
+            <li class="active"><a href="{{route('lang.index')}}"><i class="fa fa-language"></i> <span>{{ trans('lightpages::lightpages.menu_link_lang') }}</span></a></li>     
         </ul>
     </section>
 </aside>

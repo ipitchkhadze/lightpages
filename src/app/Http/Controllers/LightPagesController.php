@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
 use Ipitchkhadze\LightPages\App\Models\Page as P;
+use Ipitchkhadze\LightPages\App\Models\Lang;
 use Datatables;
 
 class LightPagesController extends BaseController {
@@ -16,7 +17,7 @@ class LightPagesController extends BaseController {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('lightpages::index');
+        return view('lightpages::pages.index');
     }
 
     public function data() {
@@ -24,10 +25,15 @@ class LightPagesController extends BaseController {
         return Datatables::of($pages)
                         ->addColumn('action', function ($page) {
                             $btns = '';
-                            $btns .= '<a class="btn btn-default" href="' . route('page', ['page' => $page->slug]) . '"><i class="fa fa-eye"></i></a>';
-                            $btns .= '<a class="btn btn-primary" href="' . route('pages.edit', ['page' => $page->slug]) . '"><i class="fa fa-edit"></i></a>';
+                            $btns .= '<a class="btn btn-default" href="' . route('page', ['page' => $page->slug]) . '">';
+                            $btns .= ($page->state) ? '<i class="fa fa-eye"></i>' : '<i class="fa text-red fa-eye-slash"></i>';
+                            $btns .= '</a>&nbsp;&nbsp;&nbsp;';
+                            $btns .= '<a class="btn btn-primary" href="' . route('pages.edit', ['page' => $page->slug]) . '"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;';
                             $btns .= '<a class="btn btn-danger destroy" href="' . route('pages.destroy', ['page' => $page->slug]) . '" data-method="delete" ><i class="fa fa-trash"></i></a>';
                             return $btns;
+                        })
+                        ->addColumn('lang', function ($page) {
+                            return $page->lang->lang;
                         })
                         ->editColumn('created_at', function ($payment) {
                             return $payment->created_at->format('d.m.Y H:i:s');
@@ -41,7 +47,8 @@ class LightPagesController extends BaseController {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('lightpages::create');
+        $data['langs'] = Lang::all();
+        return view('lightpages::pages.create', $data);
     }
 
     /**
@@ -51,8 +58,11 @@ class LightPagesController extends BaseController {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $page = new P($request->all());
-        $page->save();
+        //dd($request->get('data'));
+        foreach ($request->get('data') as $lang) {
+            $page = new P($lang);
+            $page->save();
+        }
         return redirect()->route('pages.index');
     }
 
@@ -74,7 +84,9 @@ class LightPagesController extends BaseController {
      */
     public function edit($slug) {
         $data['page'] = P::findBySlugOrFail($slug);
-        return view('lightpages::edit', $data);
+        $data['lang'] = $data['page']->lang;
+
+        return view('lightpages::pages.edit', $data);
     }
 
     /**
@@ -86,7 +98,9 @@ class LightPagesController extends BaseController {
      */
     public function update(Request $request, $slug) {
         $page = P::findBySlug($slug);
-        $page->fill($request->all())->save();
+        foreach ($request->get('data') as $lang) {
+            $page->fill($lang)->save();
+        }
         return redirect()->route('pages.index');
     }
 

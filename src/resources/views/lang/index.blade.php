@@ -7,7 +7,7 @@
 @stop
 
 @section('title')
-Модуль страниц
+
 @stop
 
 @section('header')
@@ -18,28 +18,26 @@
 <div class="col-md-12">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Список страниц</h3>&nbsp;&nbsp;&nbsp; <a class="btn btn-sm btn-primary" href="{{route('pages.create')}}"><i class="fa fa-plus"></i></a>
+            <h3 class="box-title">{{trans('lightpages::lightpages.lang_list')}}</h3>&nbsp;&nbsp;&nbsp; <a class="btn btn-sm btn-primary" href="{{route('lang.create')}}"><i class="fa fa-plus"></i></a>
         </div>
         <div class="box-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered" id="pages-table">
+                <table class="table table-striped table-bordered" id="langs-table">
                     <thead>
                         <tr>
                             <th>id</th>
-                            <th>Наименование</th>
-                            <th>Title</th>
-                            <th>URL</th>
-                            <th>Дата</th>
+                            <th>{{trans('lightpages::lightpages.lang_name')}}</th>
+                            <th>{{trans('lightpages::lightpages.lang_short')}}</th>
+                            <th>{{trans('lightpages::lightpages.creation_date')}}</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>id</th>
-                            <th>Наименование</th>
-                            <th>Title</th>
-                            <th>URL</th>
-                            <th>Дата</th>
+                            <th>{{trans('lightpages::lightpages.lang_name')}}</th>
+                            <th>{{trans('lightpages::lightpages.lang_short')}}</th>
+                            <th>{{trans('lightpages::lightpages.creation_date')}}</th>
                             <th></th>
                         </tr>
                     </tfoot>
@@ -57,7 +55,7 @@
 
 $(document).ready(function () {
 
-    var table = $('#pages-table').DataTable({
+    var table = $('#langs-table').DataTable({
         processing: true,
         serverSide: true,
         pageLength: 25,
@@ -78,43 +76,40 @@ $(document).ready(function () {
                 }
             }
         ],
-        ajax: '{!! route('pages.data') !!}',
+        ajax: '{!! route('lang.data') !!}',
         columns: [
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
-            {data: 'title', name: 'title', className: 'title'},
-            {data: 'slug', name: 'slug'},
+            {data: 'lang', name: 'lang', className: 'lang'},
             {data: 'created_at', name: 'pages.created_at'},
             {data: 'action', name: 'action', searchable: false, orderable: false},
         ],
-
         "order": [
-            [4, "desc"]
+            [3, "desc"]
         ],
         "language": {
-            "processing": "Подождите...",
-            "search": "Поиск:",
-            "lengthMenu": "Показать _MENU_ записей",
-            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
-            "infoEmpty": "Записи с 0 до 0 из 0 записей",
-            "infoFiltered": "(отфильтровано из _MAX_ записей)",
+            "processing": "{{trans('lightpages::lightpages.processing')}}",
+            "search": "{{trans('lightpages::lightpages.search')}}",
+            "lengthMenu": "{{trans('lightpages::lightpages.lengthMenu')}}",
+            "info": "{{trans('lightpages::lightpages.info')}}",
+            "infoEmpty": "{{trans('lightpages::lightpages.infoEmpty')}}",
+            "infoFiltered": "{{trans('lightpages::lightpages.infoFiltered')}}",
             "infoPostFix": "",
-            "loadingRecords": "Загрузка записей...",
-            "zeroRecords": "Записи отсутствуют.",
-            "emptyTable": "В таблице отсутствуют данные",
+            "loadingRecords": "{{trans('lightpages::lightpages.loadingRecords')}}",
+            "zeroRecords": "{{trans('lightpages::lightpages.zeroRecords')}}",
+            "emptyTable": "{{trans('lightpages::lightpages.emptyTable')}}",
             "paginate": {
-                "first": "Первая",
-                "previous": "Предыдущая",
-                "next": "Следующая",
-                "last": "Последняя"
+                "first": "{{trans('lightpages::lightpages.first')}}",
+                "previous": "{{trans('lightpages::lightpages.previous')}}",
+                "next": "{{trans('lightpages::lightpages.next')}}",
+                "last": "{{trans('lightpages::lightpages.last')}}"
             },
             "aria": {
-                "sortAscending": ": активировать для сортировки столбца по возрастанию",
-                "sortDescending": ": активировать для сортировки столбца по убыванию"
+                "sortAscending": "{{trans('lightpages::lightpages.sortAscending')}}",
+                "sortDescending": "{{trans('lightpages::lightpages.sortDescending')}}"
             }
         }
     });
-
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -124,7 +119,6 @@ $(document).ready(function () {
         e.preventDefault(); // does not go through with the link.
 
         var $this = $(this);
-
         $.post({
             type: $this.data('method'),
             url: $this.attr('href')
@@ -132,11 +126,10 @@ $(document).ready(function () {
             var d = JSON.parse(data)
             if (d.status === 'success') {
                 console.log('Table reloaded');
-                table.ajax.url( '{!! route('pages.data') !!}' ).load();
+                table.ajax.url('{!! route("lang.data") !!}').load();
             }
         });
     });
-
 });
 </script>
 @stop
