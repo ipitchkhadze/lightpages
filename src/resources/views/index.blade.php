@@ -11,16 +11,7 @@
 @stop
 
 @section('header')
-<section class="content-header">
-    <h1>
-        Модуль страниц
-        <small>Управление страницами сайта.</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Pages</a></li>
-        <li class="active">Pages</li>
-    </ol>
-</section>
+
 @stop
 
 @section('content')

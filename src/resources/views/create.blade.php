@@ -1,6 +1,8 @@
-
 @extends('lightpages::layout.layout')
 
+@section('styles')
+<link href="/vendor/lightpages/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css"/>
+@endsection
 
 @section('content')
 <div class="col-md-12">
@@ -16,3 +18,12 @@
     </div>
 </div>
 @stop
+
+@section('scripts')
+<script src="/vendor/lightpages/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
+<script>
+    $(function () {
+        $("#content").wysihtml5();
+    });
+</script>
+@endsection
